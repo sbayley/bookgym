@@ -1,6 +1,12 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Optional machine-specific defaults; never copied to the deployment target.
+if [[ -f "$PROJECT_ROOT/.local/deploy.env" ]]; then
+    source "$PROJECT_ROOT/.local/deploy.env"
+fi
+
 PI_HOST="${BOOKGYM_PI_HOST:-pi@example-pi.local}"
 REMOTE_DIR="${BOOKGYM_PI_DIR:-/home/pi/bookgym}"
 SSH_PORT="${BOOKGYM_SSH_PORT:-}"

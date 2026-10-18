@@ -65,3 +65,7 @@ The tests use temporary databases and mocked website/email interactions. They do
 The `scripts/` directory also includes Raspberry Pi deployment and earlier Mac service tooling. Deployment targets, user names, paths, and application configuration must be adapted to your environment. `--initial` deployment and `cutover_to_pi.sh` are initial setup operations that move runtime state; ordinary updates use `deploy_pi.sh` without `--initial`.
 
 SQLite files, `.env`, browser sessions, preview copies, and captured network artifacts are local runtime data and excluded from Git.
+
+## Local deployment settings
+
+Optional `.local/deploy.env` supplies machine-specific defaults for `BOOKGYM_PI_HOST`, `BOOKGYM_PI_DIR`, and `BOOKGYM_PI_USER`. Keep this file out of Git; `.local/` is also excluded from deployment uploads. Explicit environment overrides should take precedence in that file. Pi setup uses `BOOKGYM_PI_USER` when supplied, otherwise the invoking sudo user (falling back to `pi`).

@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-TARGET_USER="${BOOKGYM_PI_USER:-pi}"
+TARGET_USER="${BOOKGYM_PI_USER:-${SUDO_USER:-pi}}"
 TARGET_HOME="$(getent passwd "$TARGET_USER" | cut -d: -f6)"
 INSTALL_DIR="${BOOKGYM_PI_DIR:-$TARGET_HOME/bookgym}"
 STAGED_DB="$INSTALL_DIR/bookgym.db.cutover"
