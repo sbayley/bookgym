@@ -63,6 +63,7 @@ echo "Uploading BookGym code to $PI_HOST:$REMOTE_DIR"
 
 tar \
     --exclude='./.git' \
+    --exclude='./.local' \
     --exclude='./.venv' \
     --exclude='./.env' \
     --exclude='./bookgym.db' \
