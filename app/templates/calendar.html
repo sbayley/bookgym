@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BookGym</title>
+    <link rel="stylesheet" href="__SITE_CSS__">
+    <link rel="stylesheet" href="__ADMIN_CSS__">
+    <script src="__ADMIN_JS__" defer></script>
+</head>
+<body class="admin-page"__PREVIEW_BODY_ATTRIBUTE__>
+    __PREVIEW_BANNER__
+    <div class="managed-user-banner" id="managed-user-banner" hidden></div>
+    <div class="booking-pause-banner" id="booking-pause-banner" hidden></div>
+    <div class="admin-shell">
+        <main class="calendar-column">
+            <section class="control-strip">
+                <div class="control-top-row">
+                    <label class="search-shell" for="search">
+                        <input
+                            id="search"
+                            type="search"
+                            aria-label="Search classes"
+                            placeholder="Search classes, instructors, or categories"
+                        >
+                    </label>
+                    <div class="control-actions">
+                        <button class="user-entry" id="user-menu-open" type="button" hidden></button>
+                        <button class="auth-entry" id="auth-modal-open" type="button">
+                            <span class="auth-entry-label">Gym login</span>
+                            <span class="auth-entry-value" id="auth-entry-value">Loading</span>
+                        </button>
+                        <div class="month-controls" aria-label="Choose date range">
+                            <button id="prev-month" title="Previous" type="button">&lt;</button>
+                            <div class="month-label" id="month-label"></div>
+                            <button id="next-month" title="Next" type="button">&gt;</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-rail" aria-label="Calendar filters">
+                    <div class="class-filter-row">
+                        <div class="filter-line class-filter-line">
+                            <span class="filter-line-label">Class</span>
+                            <div class="filters" id="filters"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="calendar-scope-bar">
+                <button class="pause-entry" data-booking-pause-open type="button">Away dates</button>
+                <div class="scope-control" id="calendar-scope" role="group" aria-label="Calendar mode">
+                    <button class="scope-option active" data-scope-mode="all" type="button" aria-pressed="true">All</button>
+                    <button class="scope-option" data-scope-mode="mine" type="button" aria-pressed="false">Mine</button>
+                </div>
+            </div>
+
+            <section class="calendar-panel month-panel" id="month-panel">
+                <div class="weekdays">
+                    <div class="weekday">Sun</div>
+                    <div class="weekday">Mon</div>
+                    <div class="weekday">Tue</div>
+                    <div class="weekday">Wed</div>
+                    <div class="weekday">Thu</div>
+                    <div class="weekday">Fri</div>
+                    <div class="weekday">Sat</div>
+                </div>
+                <div class="grid" id="calendar-grid"></div>
+            </section>
+        </main>
+
+        <aside class="details-column" id="details">
+            <div class="detail-empty">
+                <h2>Class details</h2>
+                <p>Select a class to inspect booking state and seat preferences.</p>
+            </div>
+        </aside>
+    </div>
+    <div id="auth-modal-shell"></div>
+    <div id="booking-pause-modal-shell"></div>
+    <div id="user-menu-shell"></div>
+</body>
+</html>

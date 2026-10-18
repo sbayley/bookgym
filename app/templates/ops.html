@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>BookGym Admin</title>
+    <link rel="stylesheet" href="__SITE_CSS__">
+    <link rel="stylesheet" href="__OPS_CSS__">
+    <script src="__OPS_JS__" defer></script>
+</head>
+<body class="ops-page">
+    <main class="ops-shell">
+        <section class="ops-hero">
+            <div>
+                <p class="eyebrow">BookGym Admin</p>
+                <h1>Operator dashboard</h1>
+                <p class="ops-lede">Worker health, queue status, dry runs, and recent booking activity for the app itself.</p>
+            </div>
+            <div class="ops-actions">
+                <a class="primary-link" href="/">Open booking calendar</a>
+                <a class="subtle-link" href="/docs">API docs</a>
+            </div>
+        </section>
+
+        <section class="ops-grid">
+            <article class="ops-card" id="ops-status"></article>
+            <article class="ops-card" id="ops-next-due"></article>
+            <article class="ops-card" id="ops-summary"></article>
+            <article class="ops-card ops-card-wide" id="ops-queue"></article>
+            <article class="ops-card" id="ops-booking-events"></article>
+            <article class="ops-card" id="ops-discovery-events"></article>
+        </section>
+    </main>
+</body>
+</html>

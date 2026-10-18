@@ -1,0 +1,19 @@
+# Local configuration and runtime data
+.env
+.env.*
+!.env.example
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+playwright/.auth/
+artifacts/
+.preview/
+# Development
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.idea/
+.DS_Store
+*.log

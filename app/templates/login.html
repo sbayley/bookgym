@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Sign in · BookGym</title>
+    <link rel="stylesheet" href="__SITE_CSS__">
+    <link rel="stylesheet" href="__LOGIN_CSS__">
+</head>
+<body class="login-page">
+    <main class="login-card">
+        <p class="login-eyebrow">BookGym</p>
+        <h1>Welcome back</h1>
+        <p class="login-intro" id="login-intro">Enter your invited email address and we’ll send you a sign-in code.</p>
+
+        <form id="email-form" class="login-form">
+            <label>
+                <span>Email address</span>
+                <input
+                    id="login-email"
+                    name="email"
+                    type="email"
+                    autocomplete="username"
+                    autocapitalize="none"
+                    spellcheck="false"
+                    enterkeyhint="send"
+                    required
+                    autofocus
+                >
+            </label>
+            <button type="submit">Send my code</button>
+        </form>
+
+        <form id="code-form" class="login-form hidden">
+            <label>
+                <span>Six-digit code</span>
+                <input
+                    id="login-code"
+                    name="one-time-code"
+                    type="text"
+                    inputmode="numeric"
+                    autocomplete="one-time-code"
+                    enterkeyhint="go"
+                    maxlength="6"
+                    pattern="[0-9]{6}"
+                    required
+                >
+            </label>
+            <button type="submit">Open my calendar</button>
+            <button class="text-button" id="use-another-email" type="button">Use another email</button>
+        </form>
+
+        <p class="login-notice" id="login-notice" role="status"></p>
+    </main>
+    <script>
+        const emailForm = document.getElementById("email-form");
+        const codeForm = document.getElementById("code-form");
+        const emailInput = document.getElementById("login-email");
+        const codeInput = document.getElementById("login-code");
+        const notice = document.getElementById("login-notice");
+        const intro = document.getElementById("login-intro");
+        const rememberedEmailKey = "bookgym.loginEmail";
+        let email = "";
+
+        try {
+            emailInput.value = window.localStorage.getItem(rememberedEmailKey) || "";
+        } catch (_error) {
+            // Autofill still works when a browser blocks local storage.
+        }
+
+        async function postJson(url, body) {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body),
+            });
+            const payload = await response.json().catch(() => ({}));
+            if (!response.ok) throw new Error(payload.detail || "Something went wrong.");
+            return payload;
+        }
+
+        emailForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            email = emailInput.value.trim();
+            notice.textContent = "Sending…";
+            try {
+                const payload = await postJson("/auth/request-code", { email });
+                emailForm.classList.add("hidden");
+                codeForm.classList.remove("hidden");
+                intro.textContent = `We sent a code to ${email}.`;
+                notice.textContent = payload.message;
+                codeInput.focus();
+            } catch (error) {
+                notice.textContent = error.message;
+            }
+        });
+
+        codeForm.addEventListener("submit", async (event) => {
+            event.preventDefault();
+            notice.textContent = "Checking…";
+            try {
+                await postJson("/auth/verify-code", { email, code: codeInput.value });
+                try {
+                    window.localStorage.setItem(rememberedEmailKey, email);
+                } catch (_error) {
+                    // A verified sign-in should still succeed when storage is unavailable.
+                }
+                const params = new URLSearchParams(window.location.search);
+                const next = params.get("next") || "/calendar";
+                window.location.assign(next.startsWith("/") && !next.startsWith("//") ? next : "/calendar");
+            } catch (error) {
+                notice.textContent = error.message;
+                codeInput.select();
+            }
+        });
+
+        document.getElementById("use-another-email").addEventListener("click", () => {
+            codeForm.classList.add("hidden");
+            emailForm.classList.remove("hidden");
+            intro.textContent = "Enter your invited email address and we’ll send you a sign-in code.";
+            notice.textContent = "";
+            codeInput.value = "";
+            emailInput.focus();
+        });
+    </script>
+</body>
+</html>

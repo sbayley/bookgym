@@ -1,0 +1,1 @@
+"""BookGym application package."""

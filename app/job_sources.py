@@ -1,0 +1,2 @@
+MANUAL_SELECTION_RULE_NAME = "Manual selection"
+DRY_RUN_SELECTION_RULE_NAME = "Manual dry run"
